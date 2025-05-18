@@ -1,0 +1,41 @@
+import { input_prompt } from "std/env"
+import { file_download } from "std/http"
+
+echo "*** Kattis kickstart ***"
+
+// const keyword = input_prompt("Problem code name: >")
+const keyword = "4thought"
+
+echo keyword
+
+fun download_samples(keyword: Text, folder: Text): Null {
+    // https://open.kattis.com/problems/99problems2/file/statement/samples.zip
+    const url =  "https://open.kattis.com/problems/"  + keyword + "/file/statement/samples.zip"
+    echo url
+
+    echo "Downloading samples.."
+    if file_download(url, folder + "/samples.zip") {
+        echo "Done.."
+    }else {
+        echo "Unable to downlaod samples :("
+        exit(1)
+    }
+
+
+    echo "Unzipping.."
+    $unzip -d {folder} {folder}/*zip$ failed {
+        echo "Unable to unzip, exiting :("
+        exit(1)
+    }
+    echo "Done.."
+}
+
+fun make_folder(keyword: Text): Text {
+    const target = keyword
+    trust $mkdir -p {target}$
+    return target
+}
+
+const folder = make_folder(keyword)
+
+download_samples(keyword, folder)
