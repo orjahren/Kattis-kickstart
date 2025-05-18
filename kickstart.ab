@@ -73,7 +73,7 @@ fun offer_template(templates: [Text]): Text {
 
 fun get_template_names(template_repo_path: Text): [Text] {
     // NOTE: Will also contain directories. We essentially just filter for files.
-    let glob = file_glob("{template_repo_path}*") failed {
+    let glob = file_glob("{template_repo_path}/*") failed {
         echo "Failed to retrieve files."
     }
     let probable_templates = [Text]
