@@ -14,17 +14,19 @@ Automate repetetive parts of solving [Kattis](https://open.kattis.com/) problems
 
 ### Configuration
 
-Note that there are 3 hard coded configuration values in the top of the main file.
+Note that the editor command symbol (i.e. the command which will be used for opening your editor) is hard coded in the top of the main file.
+It assumes VScode.
 
-```
-const output_parent = "../akademika/elyse/kattis/"
-const template_repo = "../akademika/elyse/kattis/"
+Depending on what editor you use, you migth need to make further to the code. The script assumes that a folder can be opened with `<editor command> <folder>`.
+
+```bash
 const editor_command_symbol = "code"
 ```
 
 ## Running
 
-Execute `$ amber kickstart.ab`. You will then be prompted for the problem **keyword** and which **template** you want to use.
+Execute `$ amber kickstart.ab` in the folder where you want the new problem folder to be made.
+You will then be prompted for the problem **keyword** and which **template** you want to use.
 
 ### Example of running
 
@@ -54,4 +56,4 @@ Opening editor.
 
 ---
 
-For convenience i also provide a [pure bash executable](./transpiled.sh). But keep in mind that it needs to be [modified](#configuration) in order to work.
+For convenience i also provide a [pure bash executable](./transpiled.sh). But keep in mind that it might need to be [modified](#configuration) in order to open your editor properly.

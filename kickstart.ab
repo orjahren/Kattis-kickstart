@@ -4,9 +4,9 @@ import { file_download } from "std/http"
 import { match_regex } from "std/text"
 
 // Global config
-const output_parent = "../akademika/elyse/kattis/"
-const template_repo = "../akademika/elyse/kattis/"
 const editor_command_symbol = "code" 
+const output_parent = "."
+const template_repo = "."
 
 echo "*** Kattis kickstart ***"
 
