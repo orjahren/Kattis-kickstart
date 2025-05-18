@@ -102,7 +102,7 @@ fun initialize_problem(keyword: Text): Null {
     open_editor(editor_command_symbol, problem_folder)
 }
 
-//const keyword = input_prompt("Problem code name: >")
-const keyword = "4thought"
+const keyword = input_prompt("Problem code name: >")
+//const keyword = "4thought"
 echo "Ok, will initialize {keyword}."
 initialize_problem(keyword)
