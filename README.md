@@ -1,6 +1,6 @@
 # Kattis kickstart
 
-Automate repetetive parts of solving Kattis problems.
+Automate repetetive parts of solving [Kattis](https://open.kattis.com/) problems.
 
 ## Features
 
@@ -10,13 +10,21 @@ Automate repetetive parts of solving Kattis problems.
 
 ## Details
 
-The script is written in [Amber](https://amber-lang.com/), which transpiles to bash.
+[The script](kickstart.ab) is written in [Amber](https://amber-lang.com/), which transpiles to bash.
+
+### Configuration
 
 Note that there are 3 hard coded configuration values in the top of the main file.
 
+```
+const output_parent = "../akademika/elyse/kattis/"
+const template_repo = "../akademika/elyse/kattis/"
+const editor_command_symbol = "code"
+```
+
 ## Running
 
-Execute : `$ amber kickstart.ab`. You will then be prompted for the problem **keyword** and which **template** you want to use.
+Execute `$ amber kickstart.ab`. You will then be prompted for the problem **keyword** and which **template** you want to use.
 
 ### Example of running
 
@@ -46,4 +54,4 @@ Opening editor.
 
 ---
 
-For convenience i also provide a [pure bash executable](./transpiled.sh).
+For convenience i also provide a [pure bash executable](./transpiled.sh). But keep in mind that it needs to be [modified](#configuration) in order to work.
