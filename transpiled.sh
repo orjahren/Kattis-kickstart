@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Written in [Amber](https://amber-lang.com/)
 # version: 0.4.0-alpha
-# date: 2025-05-18 13:50:26
+# date: 2025-05-18 14:32:30
 replace__0_v0() {
     local source=$1
     local search=$2
@@ -215,20 +215,20 @@ fi
     return 0
 }
 # Global config
-__0_output_parent="../akademika/elyse/kattis/"
-__1_template_repo="../akademika/elyse/kattis/"
-__2_editor_command_symbol="code"
+__0_editor_command_symbol="code"
+__1_output_parent="."
+__2_template_repo="."
 echo "*** Kattis kickstart ***"
-dir_exists__32_v0 "${__0_output_parent}";
+dir_exists__32_v0 "${__1_output_parent}";
 __AF_dir_exists32_v0__13_8="$__AF_dir_exists32_v0";
 if [ $(echo  '!' "$__AF_dir_exists32_v0__13_8" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-    echo "Unable to locate output directory. Expected to find ${__0_output_parent}"
+    echo "Unable to locate output directory. Expected to find ${__1_output_parent}"
     exit 1
 fi
-dir_exists__32_v0 "${__1_template_repo}";
+dir_exists__32_v0 "${__2_template_repo}";
 __AF_dir_exists32_v0__19_8="$__AF_dir_exists32_v0";
 if [ $(echo  '!' "$__AF_dir_exists32_v0__19_8" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//') != 0 ]; then
-    echo "Note: Did not locate solution template source. Expected ${__1_template_repo}"
+    echo "Note: Did not locate solution template source. Expected ${__2_template_repo}"
 fi
 download_samples__143_v0() {
     local keyword=$1
@@ -285,7 +285,7 @@ offer_template__146_v0() {
     input_prompt__94_v0 "Which template? >";
     __AF_input_prompt94_v0__63_31="${__AF_input_prompt94_v0}";
     local selected_template="${__AF_input_prompt94_v0__63_31}"
-    # linear search for any matchin templates. Assume empty input to mean no template.
+    # linear search for any matching templates. Assume empty input to mean no template.
     index=0;
 for file in "${templates[@]}"; do
         match_regex__17_v0 "${file}" "${selected_template}" 0;
@@ -303,7 +303,7 @@ done
 get_template_names__147_v0() {
     local template_repo_path=$1
     # NOTE: Will also contain directories. We essentially just filter for files.
-    file_glob__43_v0 "${template_repo_path}*";
+    file_glob__43_v0 "${template_repo_path}/*";
     __AS=$?;
 if [ $__AS != 0 ]; then
         echo "Failed to retrieve files."
@@ -315,8 +315,8 @@ fi;
     index=0;
 for file in "${glob[@]}"; do
         file_exists__33_v0 "${file}";
-        __AF_file_exists33_v0__81_8="$__AF_file_exists33_v0";
-        if [ "$__AF_file_exists33_v0__81_8" != 0 ]; then
+        __AF_file_exists33_v0__81_9="$__AF_file_exists33_v0";
+        if [ "$__AF_file_exists33_v0__81_9" != 0 ]; then
             __AMBER_ARRAY_11=("${file}");
             probable_templates+=("${__AMBER_ARRAY_11[@]}")
 fi
@@ -333,7 +333,7 @@ initialize_problem__148_v0() {
     download_samples__143_v0 "${keyword}" "${problem_folder}";
     __AF_download_samples143_v0__90_5="$__AF_download_samples143_v0";
     echo "$__AF_download_samples143_v0__90_5" > /dev/null 2>&1
-    get_template_names__147_v0 "${__1_template_repo}";
+    get_template_names__147_v0 "${__2_template_repo}";
     __AF_get_template_names147_v0__92_23=("${__AF_get_template_names147_v0[@]}");
     local templates=("${__AF_get_template_names147_v0__92_23[@]}")
     offer_template__146_v0 templates[@];
@@ -350,7 +350,7 @@ fi
 else
         echo "Not using any template."
 fi
-    open_editor__145_v0 "${__2_editor_command_symbol}" "${problem_folder}";
+    open_editor__145_v0 "${__0_editor_command_symbol}" "${problem_folder}";
     __AF_open_editor145_v0__102_5="$__AF_open_editor145_v0";
     echo "$__AF_open_editor145_v0__102_5" > /dev/null 2>&1
 }
