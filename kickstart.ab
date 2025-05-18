@@ -61,7 +61,7 @@ fun open_editor(command_symbol: Text, target_folder: Text): Null {
 fun offer_template(templates: [Text]): Text {
     echo "Your detected templates are {templates}"
     const selected_template = input_prompt("Which template? >")
-    // linear search for any matchin templates. Assume empty input to mean no template.
+    // linear search for any matching templates. Assume empty input to mean no template.
     for index, file in templates {
         if match_regex(file, selected_template) {
             echo "OK, using template {file}"
@@ -76,12 +76,12 @@ fun get_template_names(template_repo_path: Text): [Text] {
     let glob = file_glob("{template_repo_path}*") failed {
         echo "Failed to retrieve files."
     }
-   let probable_templates = [Text]
-   for index, file in glob {
-    if file_exists(file) {
+    let probable_templates = [Text]
+    for index, file in glob {
+     if file_exists(file) {
         probable_templates += [file]
+     }
     }
-   }
     return probable_templates
 }
 
