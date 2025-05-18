@@ -1,6 +1,7 @@
 import { input_prompt } from "std/env"
-import { dir_create, dir_exists } from "std/fs"
+import { dir_create, dir_exists, file_exists, file_glob } from "std/fs"
 import { file_download } from "std/http"
+import { match_regex } from "std/text"
 
 // Global config
 const output_parent = "../akademika/elyse/kattis/"
@@ -12,23 +13,17 @@ echo "*** Kattis kickstart ***"
 if not dir_exists(output_parent) {
     echo "Unable to locate output directory. Expected to find {output_parent}"
     exit(1)
+
 }
 
-if not dir_exists(output_parent) {
+if not dir_exists(template_repo) {
     echo "Note: Did not locate solution template source. Expected {template_repo}"
 }
 
-const keyword = input_prompt("Problem code name: >")
-// const keyword = "4thought"
-
-echo "Ok, will initialize {keyword}."
 
 fun download_samples(keyword: Text, folder: Text): Null {
-    // https://open.kattis.com/problems/99problems2/file/statement/samples.zip
     const file_name = "samples.zip"
     const url =  "https://open.kattis.com/problems/{keyword}/file/statement/{file_name}"
-    echo url
-
     echo "Downloading samples.."
     if file_download(url, "{folder}/{file_name}") {
         echo "Done.."
@@ -36,7 +31,6 @@ fun download_samples(keyword: Text, folder: Text): Null {
         echo "Unable to downlaod samples :("
         exit(1)
     }
-
 
     echo "Unzipping.."
     // TODO: Use 'file_name' variable here?
@@ -64,6 +58,51 @@ fun open_editor(command_symbol: Text, target_folder: Text): Null {
     }
 }
 
-const problem_folder = make_problem_folder(keyword)
-download_samples(keyword, problem_folder)
-open_editor(editor_command_symbol, problem_folder)
+fun offer_template(templates: [Text]): Text {
+    echo "Your detected templates are {templates}"
+    const selected_template = input_prompt("Which template? >")
+    // linear search for any matchin templates. Assume empty input to mean no template.
+    for index, file in templates {
+        if match_regex(file, selected_template) {
+            echo "OK, using template {file}"
+            return file
+        }
+    }
+    return ""
+}
+
+fun get_template_names(template_repo_path: Text): [Text] {
+    // NOTE: Will also contain directories. We essentially just filter for files.
+    let glob = file_glob("{template_repo_path}*") failed {
+        echo "Failed to retrieve files."
+    }
+   let probable_templates = [Text]
+   for index, file in glob {
+    if file_exists(file) {
+        probable_templates += [file]
+    }
+   }
+    return probable_templates
+}
+
+fun initialize_problem(keyword: Text): Null {
+    const problem_folder = make_problem_folder(keyword)
+    download_samples(keyword, problem_folder)
+
+    const templates = get_template_names(template_repo)
+    const selected_template = offer_template(templates)
+    if file_exists(selected_template) {
+        $cp {selected_template} {problem_folder}$ failed {
+            echo "Unable to copy template {selected_template} to target {problem_folder}."
+        }
+    }else {
+        echo "Not using any template."
+    }
+
+    open_editor(editor_command_symbol, problem_folder)
+}
+
+//const keyword = input_prompt("Problem code name: >")
+const keyword = "4thought"
+echo "Ok, will initialize {keyword}."
+initialize_problem(keyword)
