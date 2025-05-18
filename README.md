@@ -31,8 +31,9 @@ You will then be prompted for the problem **keyword** and which **template** you
 ### Example of running
 
 ```
-$ amber kickstart.ab
-
+$ pwd
+/home/[username]/Documents/kattis
+$ amber ../kattis-kickstart/kickstart.ab
 *** Kattis kickstart ***
 Problem code name: >99problems2
 Ok, will initialize 99problems2.
@@ -48,9 +49,9 @@ Archive:  99problems2/samples.zip
   inflating: 99problems2/2.in
   inflating: 99problems2/2.ans
 Done..
-Your detected templates are ../akademika/elyse/kattis/cpp.cpp ../akademika/elyse/kattis/go.go
+Your detected templates are ./cpp.cpp ./go.go
 Which template? >go
-OK, using template ../akademika/elyse/kattis/go.go
+OK, using template ./go.go
 Opening editor.
 ```
 
