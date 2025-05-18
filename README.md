@@ -10,13 +10,13 @@ Automate repetetive parts of solving Kattis problems.
 
 ## Details
 
-Note that there are 3 hard coded configuration values in the top of the main file.
-
 The script is written in [Amber](https://amber-lang.com/), which transpiles to bash.
+
+Note that there are 3 hard coded configuration values in the top of the main file.
 
 ## Running
 
-Execute : `$ amber kickstart.ab`. You will then be prompted for the problem **keyword** and which **template** you want to use
+Execute : `$ amber kickstart.ab`. You will then be prompted for the problem **keyword** and which **template** you want to use.
 
 ### Example of running
 
@@ -43,3 +43,7 @@ Which template? >go
 OK, using template ../akademika/elyse/kattis/go.go
 Opening editor.
 ```
+
+---
+
+For convenience i also provide a [pure bash executable](./transpiled.sh).
