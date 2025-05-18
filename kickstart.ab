@@ -1,20 +1,36 @@
 import { input_prompt } from "std/env"
+import { dir_create, dir_exists } from "std/fs"
 import { file_download } from "std/http"
+
+// Global config
+const output_parent = "../akademika/elyse/kattis/"
+const template_repo = "../akademika/elyse/kattis/"
+const editor_command_symbol = "code" 
 
 echo "*** Kattis kickstart ***"
 
-// const keyword = input_prompt("Problem code name: >")
-const keyword = "4thought"
+if not dir_exists(output_parent) {
+    echo "Unable to locate output directory. Expected to find {output_parent}"
+    exit(1)
+}
 
-echo keyword
+if not dir_exists(output_parent) {
+    echo "Note: Did not locate solution template source. Expected {template_repo}"
+}
+
+const keyword = input_prompt("Problem code name: >")
+// const keyword = "4thought"
+
+echo "Ok, will initialize {keyword}."
 
 fun download_samples(keyword: Text, folder: Text): Null {
     // https://open.kattis.com/problems/99problems2/file/statement/samples.zip
-    const url =  "https://open.kattis.com/problems/"  + keyword + "/file/statement/samples.zip"
+    const file_name = "samples.zip"
+    const url =  "https://open.kattis.com/problems/{keyword}/file/statement/{file_name}"
     echo url
 
     echo "Downloading samples.."
-    if file_download(url, folder + "/samples.zip") {
+    if file_download(url, "{folder}/{file_name}") {
         echo "Done.."
     }else {
         echo "Unable to downlaod samples :("
@@ -23,6 +39,7 @@ fun download_samples(keyword: Text, folder: Text): Null {
 
 
     echo "Unzipping.."
+    // TODO: Use 'file_name' variable here?
     $unzip -d {folder} {folder}/*zip$ failed {
         echo "Unable to unzip, exiting :("
         exit(1)
@@ -30,12 +47,23 @@ fun download_samples(keyword: Text, folder: Text): Null {
     echo "Done.."
 }
 
-fun make_folder(keyword: Text): Text {
+fun make_problem_folder(keyword: Text): Text {
     const target = keyword
-    trust $mkdir -p {target}$
+    if dir_exists(target) {
+        echo "Folder already exists..."
+    }else {
+        dir_create(target)
+    }
     return target
 }
 
-const folder = make_folder(keyword)
+fun open_editor(command_symbol: Text, target_folder: Text): Null {
+    echo "Opening editor."
+    ${command_symbol} {target_folder}$ failed {
+        echo "Unable to open editor :("
+    }
+}
 
-download_samples(keyword, folder)
+const problem_folder = make_problem_folder(keyword)
+download_samples(keyword, problem_folder)
+open_editor(editor_command_symbol, problem_folder)
